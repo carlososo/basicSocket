@@ -1,29 +1,10 @@
-//servidor de Express
-const express = require('express');
-const app =express();
+const  Server = require("./models/Server");
+require('dotenv').config();
 
-//servidor de Sockets
-const server = require('http').createServer(app);
+const server = new Server()
 
-//configuración del socket serer
-const io = require('socket.io')(server);
+server.execute();
 
-//Desplegar el directorio publico
-app.use(express.static(__dirname+'/public'))
 
-//Para poder mandar a todos los clientes sería con io.  en vez de client
 
-io.on('connection', client => {
-  // client.emit('mensaje-bienvenida',{
-  //   msg:'Bienvenido al server',
-  //   fecha: new Date()
-  // })
-  client.on('mensaje-to-server', data=>{
-    console.log(data);
-    client.emit('mensaje-from-server',data);
-  })
- 
-});
-server.listen(8080, ()=>{
-    console.log('Server corriendo en puerto:8080');
-});
+
